@@ -58,3 +58,4 @@ end
 
 gem "jb"
 gem "byebug"
+gem 'streamio-ffmpeg'
