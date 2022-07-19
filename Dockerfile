@@ -13,6 +13,7 @@ RUN apk add --no-cache alpine-sdk \
     build-base \
     bash \
     vim \
+    ffmpeg \
     tzdata
 
 COPY Gemfile /myapp/Gemfile
