@@ -1,12 +1,17 @@
-require 'streamio-ffmpeg'
-
 class SummariesController < ApplicationController
+
+  def new
+    @summary = Summary.new
+  end
+
   def create
-    tmpfile = params[:movie]
-    movie = FFMPEG::Movie.new(tmpfile.to_s)
-    pp '+++++++++++++++++++++++++++'
-    pp tmpfile
-    pp movie
-    pp '+++++++++++++++++++++++++++'
+    @summary = Summary.create params.require(:summary).permit(:content, :video)
+    render json: @summary, status: :ok
+  end
+
+  private
+
+  def summary_params
+    params.require(:summary).permit(:content, :video)
   end
 end

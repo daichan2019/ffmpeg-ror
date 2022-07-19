@@ -1,0 +1,7 @@
+{
+  id: @summary.id.
+  "content: @summary.content,
+  "video": @summary.video,
+  "created_at": @summary.created_at,
+  "updated_at": @summary.updated_at
+}
