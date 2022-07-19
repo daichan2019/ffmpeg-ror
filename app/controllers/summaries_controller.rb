@@ -1,4 +1,6 @@
 require 'streamio-ffmpeg'
+require 'tempfile'
+
 class SummariesController < ApplicationController
 
   def new
@@ -8,17 +10,26 @@ class SummariesController < ApplicationController
   def create
     @summary = Summary.new(summary_params)
 
-    tmpfile = @summary.video_url
-    video = FFMPEG::Movie.new(tmpfile)
+    local = Tempfile.open
+    local.binmode
+
+    video = @summary.video_url
+
+    local.write(video)
+
+    ffmpeg = FFMPEG::Movie.new(local.path)
+
+    ffmpeg.transcode("tmp/movie_#{Time.current}.mp4")
+
     pp '______________________________'
-    pp tmpfile = @summary.video_url
-    pp video
+    pp ffmpeg
     pp '______________________________'
 
 
+    # @summary.video = ffmpeg
 
     if @summary.save
-      render json: @summary, methods: [:video_url]
+      render json: @summary, status: :ok
     else
       render json: @summary.errors, status: :unprocessable_entity
     end
