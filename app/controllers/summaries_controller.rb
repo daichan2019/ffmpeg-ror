@@ -9,24 +9,17 @@ class SummariesController < ApplicationController
 
   def create
     @summary = Summary.new(summary_params)
+    @summary.video_url
 
-    local = Tempfile.open
-    local.binmode
+    tempfile = Tempfile.open
+    tempfile.binmode
 
-    video = @summary.video_url
-
-    local.write(video)
-
-    ffmpeg = FFMPEG::Movie.new(local.path)
-
-    ffmpeg.transcode("tmp/movie_#{Time.current}.mp4")
+    file = params[:video]
 
     pp '______________________________'
-    pp ffmpeg
+    pp file
     pp '______________________________'
 
-
-    # @summary.video = ffmpeg
 
     if @summary.save
       render json: @summary, status: :ok

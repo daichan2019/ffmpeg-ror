@@ -1,7 +1,7 @@
 {
   id: @summary.id.
   "content: @summary.content,
-  "video": @summary.video,
+  "video": @summary.video_url,
   "created_at": @summary.created_at,
   "updated_at": @summary.updated_at
 }
